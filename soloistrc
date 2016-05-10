@@ -3,34 +3,14 @@ cookbook_paths:
 
 recipes:
 - sprout-base
-- sprout-base::homebrew
 - sprout-osx-settings
 - sprout-base::bash_it
-- sprout-homebrew
-
-- sprout-osx-settings::dock_preferences
 
 - sprout-osx-apps::flycut
-- sprout-osx-apps::iterm2
-- sprout-terminal
-- sprout-osx-apps::vagrant_plugins
 - sprout-osx-apps::shiftit
-- sprout-redis
-- sprout-mysql
-- sprout-postgresql
 
-- sprout-base::workspace_directory
 - sprout-git
-- sprout-git::projects
 - sprout-git::git_duet
-
-- sprout-osx-apps::go
-- sprout-ruby
-- sprout-rbenv
-- sprout-jetbrains-editors::rubymine
-- sprout-jetbrains-editors::intellij
-
-- sprout-vim::config #this recipe messes up the terminal session so better to be run last
 
 node_attributes:
   versions:
@@ -38,9 +18,6 @@ node_attributes:
 
   bash_it:
     enabled_plugins:
-      aliases:
-        - general
-        - bundler
       completion:
         - defaults
         - git
@@ -56,38 +33,8 @@ node_attributes:
       sprout-git:
         - bash_it/custom/git-duet_global.bash
         - bash_it/custom/git-export_editor.bash
-      sprout-bosh:
-        - bash_it/custom/bo.bash
-        - bash_it/custom/brew-cask.bash
-        - bash_it/custom/common-aliases.bash
-        - bash_it/custom/dirty-repos.bash
-        - bash_it/custom/goto.bash
-        - bash_it/custom/pullify.bash
-        - bash_it/custom/purge-system-gems.bash
-        - bash_it/custom/vim_as_default_editor.bash
-        - bash_it/custom/tilde_bin_in_path.bash
-
-  rbenv:
-    default_ruby: "2.1.2"
-    rubies:
-      1.9.3: {}
-      2.1.5: {}
 
   sprout:
-    vagrant:
-      plugins:
-        - name: vagrant-aws
-        - name: vagrant-berkshelf
-        - name: vagrant-omnibus
-        - name: vagrant-vmware-fusion
-
-    dock_preferences:
-      orientation: 'left'
-      auto_hide: true
-      clear_apps: true
-      tile_size: 35
-      magnification: false
-
     homebrew:
       formulae:
         - ack
@@ -101,7 +48,6 @@ node_attributes:
         - pstree
         - qt
         - rbenv-gem-rehash
-        - s3cmd
         - ssh-copy-id
         - the_silver_searcher
         - tig
@@ -124,67 +70,7 @@ node_attributes:
         - virtualbox
         - vmware-fusion
 
-    terminal:
-      default_profile: 'Pro'
-
-    iterm2:
-      color:
-        default: arthur
-
     git:
-      projects:
-        - name: deployments-bosh
-          url: git@github.com:cloudfoundry/deployments-bosh.git
-          post_clone_commands:
-            - "git submodule update --init --recursive"
-        - name: bosh
-          url: git@github.com:cloudfoundry/bosh.git
-          post_clone_commands:
-            - "git checkout develop"
-            - "git submodule update --init --recursive"
-        - name: bosh-agent
-          url: git@github.com:cloudfoundry/bosh-agent.git
-          post_clone_commands:
-            - "git submodule update --init --recursive"
-        - name: bosh-init
-          url: git@github.com:cloudfoundry/bosh-init.git
-          post_clone_commands:
-            - "git submodule update --init --recursive"
-        - name: bosh-lite
-          url: git@github.com:cloudfoundry/bosh-lite.git
-          post_clone_commands:
-            - "git submodule update --init --recursive"
-        - name: dummy-boshrelease
-          url: git@github.com:pivotal-cf-experimental/dummy-boshrelease.git
-          post_clone_commands:
-            - "git submodule update --init --recursive"
-        - name: bosh-aws-cpi-release
-          url: git@github.com:cloudfoundry-incubator/bosh-aws-cpi-release.git
-          post_clone_commands:
-            - "git submodule update --init --recursive"
-        - name: bosh-openstack-cpi-release
-          url: git@github.com:cloudfoundry-incubator/bosh-openstack-cpi-release.git
-          post_clone_commands:
-            - "git submodule update --init --recursive"
-        - name: bosh_vcloud_cpi
-          url: git@github.com:cloudfoundry/bosh_vcloud_cpi.git
-          post_clone_commands:
-            - "git submodule update --init --recursive"
-        - name: bosh-vcloud-cpi-release
-          url: git@github.com:cloudfoundry-incubator/bosh-vcloud-cpi-release.git
-          post_clone_commands:
-            - "git submodule update --init --recursive"
-        - name: bosh-vsphere-cpi-release
-          url: git@github.com:cloudfoundry-incubator/bosh-vsphere-cpi-release.git
-          post_clone_commands:
-            - "git submodule update --init --recursive"
-        - name: sprout-bosh
-          url: git@github.com:pivotal-cf/sprout-bosh.git
-        - name: bosh-concourse-ci
-          url: git@github.com:cloudfoundry/bosh-concourse-ci.git
-          post_clone_commands:
-            - "git submodule update --init --recursive"
-
       aliases:
         - 'ci "duet-commit -v"'
 
@@ -259,7 +145,3 @@ node_attributes:
         - initials: zh
           name:     Hua Zhang
           email:    zhuadl@cn.ibm.com
-
-    vim:
-      config:
-        repo: "https://github.com/luan/vimfiles.git"
